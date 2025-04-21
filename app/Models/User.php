@@ -57,4 +57,17 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    public function publishedNotes(User $user)
+    {
+        return $this->where('user_id', $user->id)
+            ->where('is_published', true)
+            ->get();
+    }
+
 }
